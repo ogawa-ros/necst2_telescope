@@ -7,10 +7,10 @@ def generate_launch_description():
             package='ros2pkg_ogameasure',
             node_executable='motor_locker',
             parameters=[
-                {'az_upper_2nd_limit': ''},
-                {'az_lower_2nd_limit': ''}
-                {'el_upper_2nd_limit': ''}
-                {'el_lower_2nd_limit': ''}
+                {'az_upper_2nd_limit': '355'},
+                {'az_lower_2nd_limit': '5'}
+                {'el_upper_2nd_limit': '85'}
+                {'el_lower_2nd_limit': '10'}
             ]
         )],
        )
