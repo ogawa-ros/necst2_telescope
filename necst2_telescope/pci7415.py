@@ -1,0 +1,219 @@
+import sys
+import time
+import queue
+import threading
+
+import rospy
+
+import pyinterface
+print(pyinterface.__version__)
+import std_msgs.msg
+
+class pci7415_driver(object):
+
+
+    def __init__(self, rsw_id, params):
+        #（__init__における handler の組み込み場所）
+
+    #元driver
+        self.func_queue = queue.Queue()
+        self.pub = {}
+        self.use_axis = ''.join([ax for ax in params])
+
+        self.params = params
+        self.mode = [params[ax]['mode'] for ax in self.use_axis]
+        self.motion = {ax: params[ax]['motion'] for ax in self.use_axis}
+
+
+    #元handler
+        self.rsw_id = rsw_id
+        #use axis
+        self.current_speed = {ax: 0 for ax in self.use_axis}
+        self.current_step = {ax: 0 for ax in self.use_axis}
+        self.current_moving = {ax: 0 for ax in self.use_axis}
+        self.last_direction = {ax: 0 for ax in self.use_axis}
+        self.do_status = [0, 0, 0, 0]
+
+        self.move_mode = {ax: p['mode'] for ax, p in params.items()}
+        self.default_speed = {ax: p['motion']['speed'] for ax, p in params.items()}
+        self.low_speed = {ax: p['motion']['low_speed'] for ax, p in params.items()}
+
+        self.mot = pyinterface.open(7415, rsw_id)
+        [self.mot.set_pulse_out(ax, 'method', params[ax]['pulse_conf']) for ax in self.use_axis]
+        self.mot.set_motion(self.use_axis, self.mode, self.motion)
+
+    #元handler 命令値を受け取る
+        for ax in self.use_axis:
+            b = '{base}/{ax}/'.format(**locals())
+            rospy.Subscriber(b+'step_cmd', std_msgs.msg.Int64, self.set_step, callback_args=ax)
+            rospy.Subscriber(b+'speed_cmd', std_msgs.msg.Float64, self.set_speed, callback_args=ax)
+
+
+        for do_num in range(1,5):
+            rospy.Subscriber('{}/output_do{}_cmd'.format(base, do_num), std_msgs.msg.Int64, self.set_do, callback_args=do_num)
+
+        # この位置をどうしよう？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
+        time.sleep(0.5)
+
+        # loop start 元driver
+        self.th = threading.Thread(target=self.loop)
+        self.th.setDaemon(True)
+        self.th.start()
+
+        return
+
+
+
+    #　元driver
+    def loop(self):
+        while not rospy.is_shutdown():
+            #t0 = time.time()
+            speed = self.mot.read_speed(self.use_axis)
+            step = self.mot.read_counter(self.use_axis, cnt_mode='counter')
+            moving = self.mot.driver.get_main_status(self.use_axis)
+            #t1 = time.time()
+         # speed, step はそのまま辞書に入れる　　for文はいらない
+
+            self.current_speed = {ax: _ for ax, _ in zip(self.use_axis, speed)}
+            self.current_step = {ax: _ for ax, _ in zip(self.use_axis, step)}
+            self.current_moving = {ax: _ for ax, _ in zip(self.use_axis, moving)}
+
+            # 所要時間を測る
+            #t2 = time.time()
+            #self.pub_dt1.publish(t1-t0)
+            #self.pub_dt2.publish(t2-t1)
+            #self.pub_qsize.publish(self.func_queue.qsize())
+            if not self.func_queue.empty():
+                f = self.func_queue.get()
+                f['func'](f['data'], f['axis'])
+            else:
+                pass
+
+            time.sleep(1e-5)
+            # 要検討
+            continue
+
+if　
+    def set_speed(self, speed, ax):
+        if abs(speed.data) < self.low_speed[ax]:
+            #pub stop
+            self.func_queue.put({'func': self.stop, 'data': 1, 'axis': ax}) # ->req data は１のこと？？？？？???????
+            while self.current_moving[ax] != 0:
+                time.sleep(10e-5)
+            self.last_direction[ax] = 0
+            return
+
+        if self.move_mode[ax] == 'jog':
+            if (self.last_direction[ax] * speed > 0) & (self.current_moving[ax] != 0):
+                #pub change_speed
+                self.func_queue.put({'func': self.change_speed, 'data': abs(speed), 'axis': ax}) #req dataはabs(speed.data)???????
+                pass
+
+            else:
+
+                if speed > 0:
+                    step = +1
+                    pass
+
+                else:
+                    step = -1
+                    pass
+
+                speed_step = [abs(speed), step]
+                self.last_direction[ax] = step
+
+                #pub start
+
+                self.func_queue.put({'func': self.start, 'data': speed_step, 'axis': ax})　# speed_step_arrayはどこに代入？？？？？？？？
+                time.sleep(0.01)
+                pass
+            pass
+
+        else:
+            pass
+
+
+        return
+　　#元handler
+    def set_do(self, do, do_num):
+        self.do_status[do_num-1] = do.data
+        self.func_queue.put({'func': self.output_do, 'data': self.do_status, 'axis': 0})
+        return
+
+    #function
+    def output_do(self, data, axis):
+        self.mot.output_do(data)
+        pass
+
+    def start(self, data, axis):
+        self.mot.stop_motion(axis=axis, stop_mode='immediate_stop')
+        self.motion[axis]['speed'] = data[0]
+        self.motion[axis]['step'] = int(data[1])
+        axis_mode = [self.mode[self.use_axis.find(axis)]]
+        while self.current_moving[axis] != 0:
+            time.sleep(10e-5)
+            continue
+        self.mot.set_motion(axis=axis, mode=axis_mode, motion=self.motion)
+        self.mot.start_motion(axis=axis, start_mode='const', move_mode=self.params[axis]['mode'])
+        pass
+
+    def stop(self, data, axis):
+        self.mot.stop_motion(axis=axis, stop_mode='immediate_stop')
+        pass
+
+    def change_speed(self, data, axis):
+        self.mot.change_speed(axis=axis, mode='accdec_change', speed=[data])
+        #self.params[axis]['motion'][axis]['speed'] = abs(req.data)
+        pass
+
+    def change_step(self, data, axis):
+        self.mot.change_step(axis=axis, step=[data])
+        pass
+
+
+
+
+
+default_name = 'pci7415'
+default_rsw_id = '0'
+default_do_conf = "[0, 0, 0, 0]"
+default_use_axis = 'xyzu'
+default_pulse_conf = "{'PULSE': '0', 'OUT': '0', 'DIR': '0', 'WAIT': '0', 'DUTY': '0'}"
+default_mode = 'ptp'
+default_clock = 299
+default_acc_mode = 'acc_normal'
+default_low_speed = 200
+default_speed = 10000
+default_acc = 1000
+default_dec = 1000
+default_step = 0
+
+
+if __name__ == '__main__':
+    name = rospy.get_param('~node_name'.format(**locals()), default_name)
+    rospy.init_node(name)
+
+    rsw_id = rospy.get_param('~rsw_id', default_rsw_id)
+    use_axis = rospy.get_param('~use_axis', default_use_axis) # ex. 'xyzu', 'xy', or 'yu'
+
+    params = {}
+    for ax in use_axis:
+        params[ax] = {}
+        params[ax]['mode'] = rospy.get_param('~{ax}_mode'.format(**locals()), default_mode)
+        #p['do_conf'] = eval(rospy.get_param('~do_conf', default_do_conf))
+        params[ax]['pulse_conf'] = [eval(rospy.get_param('~{ax}_pulse_conf'.format(**locals()), default_pulse_conf))]
+
+        mp = {}
+        mp['clock'] = rospy.get_param('~{ax}_clock'.format(**locals()), default_clock)
+        mp['acc_mode'] = rospy.get_param('~{ax}_acc_mode'.format(**locals()), default_acc_mode)
+        mp['low_speed'] = rospy.get_param('~{ax}_low_speed'.format(**locals()), default_low_speed)
+        mp['speed'] = rospy.get_param('~{ax}_speed'.format(**locals()), default_speed)
+        mp['acc'] = rospy.get_param('~{ax}_acc'.format(**locals()), default_acc)
+        mp['dec'] = rospy.get_param('~{ax}_dec'.format(**locals()), default_dec)
+        mp['step'] = rospy.get_param('~{ax}_step'.format(**locals()), default_step)
+        params[ax]['motion'] = mp
+        continue
+
+    driver = pci7415_driver(rsw_id, params)
+
+    rospy.spin()
