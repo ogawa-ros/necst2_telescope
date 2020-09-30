@@ -38,7 +38,9 @@ class motor_locker(object):
     def recieve_az(self, q):
         self.az = q.data
         if self.az > float(self.az_upper_2nd_limit) or self.az < float(self.az_lower_2nd_limit):
-            self.pub_az_lock.publish(True)
+            msg = Bool()
+            msg.data = True
+            self.pub_az_lock.publish(msg)
         else:
             pass
         return
@@ -46,7 +48,9 @@ class motor_locker(object):
     def recieve_el(self, q):
         self.el = q.data
         if self.el > float(self.el_upper_2nd_limit) or self.el < float(self.el_lower_2nd_limit):
-            self.pub_el_lock.publish(True)
+            msg = Bool()
+            msg2.data = True
+            self.pub_el_lock.publish(msg)
         else:
             pass
         return

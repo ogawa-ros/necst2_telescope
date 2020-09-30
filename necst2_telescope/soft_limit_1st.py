@@ -36,16 +36,28 @@ class checker(object):
     def check_az(self, q):
         self.az = q.data
         if self.az > float(self.az_upper_1st_limit):
-            self.pub_az_cmd2.publish(float(self.az_upper_1st_limit))
-            self.pub_az_flag.publish(True)
+            msg = Float64()
+            msg.data = float(self.az_upper_1st_limit)
+            msg2 = Bool()
+            msg2.data = True
+            self.pub_az_cmd2.publish(msg)
+            self.pub_az_flag.publish(msg2)
 
         elif self.az < float(self.az_lower_1st_limit):
-            self.pub_az_cmd2.publish(float(self.az_lower_1st_limit))
-            self.pub_az_flag.publish(True)
+            msg = Float64()
+            msg.data = float(self.az_lower_1st_limit)
+            msg2 = Bool()
+            msg2.data = True
+            self.pub_az_cmd2.publish(msg)
+            self.pub_az_flag.publish(msg2)
 
         else:
-            self.pub_az_cmd2.publish(self.az)
-            self.pub_az_flag.publish(False)
+            msg = Float64()
+            msg.data = self.az
+            msg2 = Bool()
+            msg2.data = False
+            self.pub_az_cmd2.publish(msg)
+            self.pub_az_flag.publish(msg2)
             pass
 
         return
@@ -53,16 +65,28 @@ class checker(object):
     def check_el(self, q):
         self.el = q.data
         if self.el > float(self.el_upper_1st_limit):
-            self.pub_el_cmd2.publish(float(self.el_upper_1st_limit))
-            self.pub_el_flag.publish(True)
+            msg = Float64()
+            msg.data = float(self.el_upper_1st_limit)
+            msg2 = Bool()
+            msg2.data = True
+            self.pub_el_cmd2.publish(msg)
+            self.pub_el_flag.publish(msg2)
 
         elif self.el < float(self.el_lower_1st_limit):
-                self.pub_el_cmd2.publish(float(self.el_lower_1st_limit))
-                self.pub_el_flag.publish(True)
+            msg = Float64()
+            msg.data = float(self.el_lower_1st_limit)
+            msg2 = Bool()
+            msg2.data = True
+            self.pub_el_cmd2.publish(msg)
+            self.pub_el_flag.publish(msg2)
 
         else:
-            self.pub_el_cmd2.publish(self.el)
-            self.pub_el_flag.publish(False)
+            msg = Float64()
+            msg.data = self.el
+            msg2 = Bool()
+            msg2.data = False
+            self.pub_el_cmd2.publish(msg)
+            self.pub_el_flag.publish(msg2)
             pass
 
         return
