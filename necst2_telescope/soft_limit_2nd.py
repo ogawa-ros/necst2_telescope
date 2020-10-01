@@ -21,8 +21,7 @@ class motor_locker(object):
         self.node.declare_parameter("el_upper_2nd_limit")
         self.node.declare_parameter("el_lower_2nd_limit")
 
-        self.az_upper_2nd_limit = self.node.get_parameter("az_upper_2nd_limit").get_parameter_value().double_value
-        self.az_upper_2nd_limit = 350.0
+        self.az_upper_2nd_limit = self.node.get_parameter("az_upper_2nd_limit").double_value
         self.az_lower_2nd_limit = self.node.get_parameter("az_lower_2nd_limit").get_parameter_value().double_value
         self.el_upper_2nd_limit = self.node.get_parameter("el_upper_2nd_limit").get_parameter_value().double_value
         self.el_lower_2nd_limit = self.node.get_parameter("el_lower_2nd_limit").get_parameter_value().double_value
