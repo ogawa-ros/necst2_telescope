@@ -28,9 +28,9 @@ class antenna_el_feedback(object):
         self.node.declare_parameter("p_coeff")
         self.node.declare_parameter("i_coeff")
         self.node.declare_parameter("d_coeff")
-        self.p_coeff = self.node.get_parameter("p_coeff").get_parameter_value().string_value
-        self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().string_value
-        self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().string_value
+        self.p_coeff = self.node.get_parameter("p_coeff").get_parameter_value().double_value
+        self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().double_value
+        self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().double_value
 
         self.hensa_stock = [0] * self.i_ave_num
 
@@ -38,15 +38,15 @@ class antenna_el_feedback(object):
         self.node.declare_parameter("pulseper360deg")
         self.node.declare_parameter("pulse_a")
         self.node.declare_parameter("pulse_b")
-        self.gear_ratio = self.node.get_parameter("gear_ratio").get_parameter_value().string_value
-        self.pulseper360deg = self.node.get_parameter("pulseper360deg").get_parameter_value().string_value
-        self.pulse_a = self.node.get_parameter("pulse_a").get_parameter_value().string_value
-        self.pulse_b = self.node.get_parameter("pulse_b").get_parameter_value().string_value
+        self.gear_ratio = self.node.get_parameter("gear_ratio").get_parameter_value().double_value
+        self.pulseper360deg = self.node.get_parameter("pulseper360deg").get_parameter_value().double_value
+        self.pulse_a = self.node.get_parameter("pulse_a").get_parameter_value().double_value
+        self.pulse_b = self.node.get_parameter("pulse_b").get_parameter_value().double_value
 
         self.node.declare_parameter("MOTOR_MAXSTEP")
         self.node.declare_parameter("MOTOR_el_MAXSPEED")
-        self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().string_value
-        self.MOTOR_el_MAXSPEED = self.node.get_parameter("MOTOR_el_MAXSPEED").get_parameter_value().string_value
+        self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().double_value
+        self.MOTOR_el_MAXSPEED = self.node.get_parameter("MOTOR_el_MAXSPEED").get_parameter_value().double_value
         
         topic_name = {'to'   : '/opu1p85m/el_speed',
                       'cur'  : '/opu1p85m/el_current_speed',
