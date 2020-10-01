@@ -71,7 +71,7 @@ class antenna_az_feedback(object):
             pass
         self.t_now = time.time()
 
-        speed = self.calc_pid(self.ihensa)
+        speed = self.calc_pid()
 
         # update
         self.pre_hensa = self.target_deg - self.encoder_deg
