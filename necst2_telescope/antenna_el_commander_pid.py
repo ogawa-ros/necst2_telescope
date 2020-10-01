@@ -129,7 +129,7 @@ class antenna_el_feedback(object):
 
         dhensa = hensa - self.pre_hensa
         if math.fabs(dhensa) > 1:
-            dhensa = 0
+            dhensa = 0.0
 
         msg_target = Float64()
         msg_current = Float64()
@@ -139,14 +139,14 @@ class antenna_el_feedback(object):
             self.current_speed = (self.encoder_deg - self.enc_before) / (self.t_now - self.t_past)
         
         if self.pre_deg == 0: # for first move
-            target_speed = 0
+            target_speed = 0.0
         else:
             target_speed = (self.target_deg - self.pre_deg) / (self.t_now - self.t_past)
         
         try:
             self.ihensa = sum(self.hensa_stock) / len(self.hensa_stock)
         except:
-            self.ihensa = 0
+            self.ihensa = 0.0
 
         # PID
         rate = target_speed + self.p_coeff*hensa + self.i_coeff*self.ihensa*(self.t_now-self.t_past) + self.d_coeff*dhensa/(self.t_now-self.t_past)
