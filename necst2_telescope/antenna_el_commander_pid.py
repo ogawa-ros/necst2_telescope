@@ -155,9 +155,9 @@ class antenna_el_feedback(object):
         msg_current.data = self.current_speed
         msg_hensa.data = hensa
 
-        self.topic_tar.publish(target_speed)
-        self.topic_cur.publish(self.current_speed)
-        self.topic_hensa.publish(hensa)
+        self.topic_tar.publish(msg_target)
+        self.topic_cur.publish(msg_current)
+        self.topic_hensa.publish(msg_hensa)
 
         return rate
 
