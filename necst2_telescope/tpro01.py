@@ -1,12 +1,10 @@
 import rclpy
-from rclpy.node import Node
 from std_msgs.msg import Float64
 import time
 
 class AzEl_Publisher(object):
 
     def __init__(self):
-        #self.process=os.getpid()
         self.node = rclpy.create_node('AzEl_publisher')
         self.az_pub = self.node.create_publisher(Float64, '/1p85m/az', 1)
         self.el_pub = self.node.create_publisher(Float64, '/1p85m/el', 1)
@@ -29,7 +27,7 @@ def main(args=None):
     rclpy.spin(AzEl_publisher.node)
 
     AzEl_publisher.node.destroy_node()
-     rclpy.shutdown()
+    rclpy.shutdown()
 
 
 if __name__ == '__main__':
