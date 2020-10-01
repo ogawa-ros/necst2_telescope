@@ -81,7 +81,7 @@ class antenna_az_feedback(object):
         self.t_past = self.t_now
 
         # deg -> pulse
-        speed = speed * self.gear_ratio / 360 * (self.pulseper360deg * (self.pulse_b / self.pulse_a))
+        speed = speed * self.gear_ratio / 360.0 * (self.pulseper360deg * (self.pulse_b / self.pulse_a))
 
         # limit of acceleration
         if abs(speed - self.speed_d) < self.MOTOR_MAXSTEP:
