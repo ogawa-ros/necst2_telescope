@@ -5,7 +5,7 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='necst2_telescope',
-            node_executable='antenna_az_commander_pid',
+            node_executable='az_pid',
             parameters=[
                 {'p_coeff': "1.5"},
                 {'i_coeff': "0"},
@@ -20,7 +20,7 @@ def generate_launch_description():
         ), 
         Node(
             package='necst2_telescope',
-            node_executable='antenna_el_commander_pid',
+            node_executable='el_pid',
             parameters=[
                 {'p_coeff': "1.5"},
                 {'i_coeff': "0"},
