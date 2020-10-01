@@ -21,6 +21,8 @@ setup(
     entry_points={
         'console_scripts':[
             '1st_limit='+package_name+'.soft_limit_1st:main',
+            'az_pid='+package_name+'.antenna_az_commander_pid',
+            'el_pid='+package_name+'.antenna_el_commander_pid',
             'tpro01='+package_name+'.tpro01:main'
             ],
     },
