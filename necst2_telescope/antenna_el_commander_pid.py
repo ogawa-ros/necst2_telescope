@@ -54,12 +54,12 @@ class antenna_el_feedback(object):
                       'hensa': '/opu1p85m/el_pid_hensa',
                       'from1': '/opu1p85m/el_cmd2',
                       'from2': '/opu1p85m/el'}
-        self.topic_to = rclpy.node.create_publisher(Float64, topic_name['to'], 1)
-        self.topic_cur = rclpy.node.create_publisher(Float64, topic_name['cur'], 1)
-        self.topic_tar = rclpy.node.create_publisher(Float64, topic_name['tar'], 1)
-        self.topic_hensa = rclpy.node.create_publisher(Float64, topic_name['hensa'], 1)
-        topic_from1 = rclpy.node.create_subscription(Float64, topic_name['from1'], self.antenna_el_feedback, 1)
-        topic_from2 = rclpy.node.create_subscription(Float64, topic_name['from2'], self.antenna_el_encoder, 1)
+        self.topic_to = self.node.create_publisher(Float64, topic_name['to'], 1)
+        self.topic_cur = self.node.create_publisher(Float64, topic_name['cur'], 1)
+        self.topic_tar = self.node.create_publisher(Float64, topic_name['tar'], 1)
+        self.topic_hensa = self.node.create_publisher(Float64, topic_name['hensa'], 1)
+        topic_from1 = self.node.create_subscription(Float64, topic_name['from1'], self.antenna_el_feedback, 1)
+        topic_from2 = self.node.create_subscription(Float64, topic_name['from2'], self.antenna_el_encoder, 1)
         pass
 
     def antenna_el_feedback(self, command):
