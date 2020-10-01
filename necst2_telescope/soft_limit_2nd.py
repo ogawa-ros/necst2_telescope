@@ -42,6 +42,9 @@ class motor_locker(object):
             msg.data = True
             self.pub_az_lock.publish(msg)
         else:
+            msg = Bool()
+            msg.data = False
+            self.pub_az_lock.publish(msg)
             pass
         return
 
@@ -52,6 +55,9 @@ class motor_locker(object):
             msg.data = True
             self.pub_el_lock.publish(msg)
         else:
+            msg = Bool()
+            msg.data = False
+            self.pub_el_lock.publish(msg)
             pass
         return
 
