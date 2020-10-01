@@ -38,6 +38,7 @@ class motor_locker(object):
     def recieve_az(self, q):
         self.az = q.data
         if self.az > self.az_upper_2nd_limit or self.az < self.az_lower_2nd_limit:
+            self.node.get_logger().info('Publishing: "%s"' % self.az_upper_2nd_limit)
             msg = Bool()
             msg.data = True
             self.pub_az_lock.publish(msg)
