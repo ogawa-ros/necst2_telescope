@@ -19,7 +19,9 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [
-        ],
+        'console_scripts':[
+            '1st_limit='+package_name+'.soft_limit_1st:main'
+            'tpro01='+package_name+'.tpro01:main'
+            ],
     },
 )
