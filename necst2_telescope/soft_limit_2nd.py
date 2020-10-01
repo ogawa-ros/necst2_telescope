@@ -41,10 +41,14 @@ class motor_locker(object):
             msg = Bool()
             msg.data = True
             self.pub_az_lock.publish(msg)
+            print(self.az_upper_2nd_limit)
+            print(self.az_lower_2nd_limit)
         else:
             msg = Bool()
             msg.data = False
             self.pub_az_lock.publish(msg)
+            print(self.az_upper_2nd_limit)
+            print(self.az_lower_2nd_limit)
             pass
         return
 
