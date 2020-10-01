@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts':[
-            '1st_limit='+package_name+'.soft_limit_1st:main',
-            '2nd_limit='+package_name+'.soft_limit_2nd:main',
+            'limit_1st='+package_name+'.soft_limit_1st:main',
+            'limit_2nd='+package_name+'.soft_limit_2nd:main',
             'az_pid='+package_name+'.antenna_az_commander_pid:main',
             'el_pid='+package_name+'.antenna_el_commander_pid:main',
             'tpro01='+package_name+'.tpro01:main'
