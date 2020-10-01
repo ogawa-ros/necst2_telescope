@@ -32,7 +32,7 @@ class antenna_el_feedback(object):
         self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().double_value
         self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().double_value
 
-        self.hensa_stock = [0] * self.i_ave_num
+        self.hensa_stock = [0.0] * self.i_ave_num
 
         self.node.declare_parameter("gear_ratio")
         self.node.declare_parameter("pulseper360deg")
@@ -81,7 +81,7 @@ class antenna_el_feedback(object):
         self.t_past = self.t_now
 
         # deg -> pulse
-        speed = speed * self.gear_ratio / 360 * (self.pulseper360deg * (self.pulse_b / self.pulse_a))
+        speed = speed * self.gear_ratio / 360.0 * (self.pulseper360deg * (self.pulse_b / self.pulse_a))
 
         # limit of acceleration
         if abs(speed - self.speed_d) < self.MOTOR_MAXSTEP:
