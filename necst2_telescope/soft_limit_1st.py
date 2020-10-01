@@ -16,10 +16,10 @@ class checker(object):
         self.node.declare_parameter("el_upper_1st_limit")
         self.node.declare_parameter("el_lower_1st_limit")
 
-        self.az_upper_1st_limit = self.node.get_parameter("az_upper_1st_limit").get_parameter_value().string_value
-        self.az_lower_1st_limit = self.node.get_parameter("az_lower_1st_limit").get_parameter_value().string_value
-        self.el_upper_1st_limit = self.node.get_parameter("el_upper_1st_limit").get_parameter_value().string_value
-        self.el_lower_1st_limit = self.node.get_parameter("el_lower_1st_limit").get_parameter_value().string_value
+        self.az_upper_1st_limit = self.node.get_parameter("az_upper_1st_limit").get_parameter_value().double_value
+        self.az_lower_1st_limit = self.node.get_parameter("az_lower_1st_limit").get_parameter_value().double_value
+        self.el_upper_1st_limit = self.node.get_parameter("el_upper_1st_limit").get_parameter_value().double_value
+        self.el_lower_1st_limit = self.node.get_parameter("el_lower_1st_limit").get_parameter_value().double_value
 
 
         topic_name = '/opu1p85m/'
@@ -35,17 +35,17 @@ class checker(object):
 
     def check_az(self, q):
         self.az = q.data
-        if self.az > float(self.az_upper_1st_limit):
+        if self.az > self.az_upper_1st_limit:
             msg = Float64()
-            msg.data = float(self.az_upper_1st_limit)
+            msg.data = self.az_upper_1st_limit
             msg2 = Bool()
             msg2.data = True
             self.pub_az_cmd2.publish(msg)
             self.pub_az_flag.publish(msg2)
 
-        elif self.az < float(self.az_lower_1st_limit):
+        elif self.az < self.az_lower_1st_limit:
             msg = Float64()
-            msg.data = float(self.az_lower_1st_limit)
+            msg.data = self.az_lower_1st_limit
             msg2 = Bool()
             msg2.data = True
             self.pub_az_cmd2.publish(msg)
@@ -64,17 +64,17 @@ class checker(object):
 
     def check_el(self, q):
         self.el = q.data
-        if self.el > float(self.el_upper_1st_limit):
+        if self.el > self.el_upper_1st_limit:
             msg = Float64()
-            msg.data = float(self.el_upper_1st_limit)
+            msg.data = self.el_upper_1st_limit
             msg2 = Bool()
             msg2.data = True
             self.pub_el_cmd2.publish(msg)
             self.pub_el_flag.publish(msg2)
 
-        elif self.el < float(self.el_lower_1st_limit):
+        elif self.el < self.el_lower_1st_limit:
             msg = Float64()
-            msg.data = float(self.el_lower_1st_limit)
+            msg.data = self.el_lower_1st_limit
             msg2 = Bool()
             msg2.data = True
             self.pub_el_cmd2.publish(msg)

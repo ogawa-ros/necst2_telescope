@@ -21,10 +21,10 @@ class motor_locker(object):
         self.node.declare_parameter("el_upper_2nd_limit")
         self.node.declare_parameter("el_lower_2nd_limit")
 
-        self.az_upper_2nd_limit = self.node.get_parameter("az_upper_2nd_limit").get_parameter_value().string_value
-        self.az_lower_2nd_limit = self.node.get_parameter("az_lower_2nd_limit").get_parameter_value().string_value
-        self.el_upper_2nd_limit = self.node.get_parameter("el_upper_2nd_limit").get_parameter_value().string_value
-        self.el_lower_2nd_limit = self.node.get_parameter("el_lower_2nd_limit").get_parameter_value().string_value
+        self.az_upper_2nd_limit = self.node.get_parameter("az_upper_2nd_limit").get_parameter_value().double_value
+        self.az_lower_2nd_limit = self.node.get_parameter("az_lower_2nd_limit").get_parameter_value().double_value
+        self.el_upper_2nd_limit = self.node.get_parameter("el_upper_2nd_limit").get_parameter_value().double_value
+        self.el_lower_2nd_limit = self.node.get_parameter("el_lower_2nd_limit").get_parameter_value().double_value
 
         topic_name = '/opu1p85m/'
 
@@ -37,7 +37,7 @@ class motor_locker(object):
 
     def recieve_az(self, q):
         self.az = q.data
-        if self.az > float(self.az_upper_2nd_limit) or self.az < float(self.az_lower_2nd_limit):
+        if self.az > self.az_upper_2nd_limit or self.az < self.az_lower_2nd_limit:
             msg = Bool()
             msg.data = True
             self.pub_az_lock.publish(msg)
@@ -47,9 +47,9 @@ class motor_locker(object):
 
     def recieve_el(self, q):
         self.el = q.data
-        if self.el > float(self.el_upper_2nd_limit) or self.el < float(self.el_lower_2nd_limit):
+        if self.el > self.el_upper_2nd_limit or self.el < self.el_lower_2nd_limit:
             msg = Bool()
-            msg2.data = True
+            msg.data = True
             self.pub_el_lock.publish(msg)
         else:
             pass
