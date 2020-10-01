@@ -31,8 +31,8 @@ class motor_locker(object):
         self.pub_az_lock = self.node.create_publisher(Bool, topic_name+'az_lock_cmd', 1)
         self.pub_el_lock = self.node.create_publisher(Bool, topic_name+'el_lock_cmd', 1)
 
-        self.node.create_subscription(Float64, topic_name+'az', self.recieve_az, 1)
-        self.node.create_subscription(Float64, topic_name+'el', self.recieve_el, 1)
+        self.node.create_subscription(Float64, '/dev/HEIDENHAIN/ND287/az', self.recieve_az, 1)
+        self.node.create_subscription(Float64, '/dev/HEIDENHAIN/ND287/el', self.recieve_el, 1)
 
 
     def recieve_az(self, q):
