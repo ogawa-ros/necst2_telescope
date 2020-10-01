@@ -53,7 +53,8 @@ class antenna_el_feedback(object):
                       'tar'  : '/opu1p85m/el_target_speed',
                       'hensa': '/opu1p85m/el_pid_hensa',
                       'from1': '/opu1p85m/el_cmd2',
-                      'from2': '/opu1p85m/el'}
+                      'from2': '/dev/HEIDENHAIN/ND287/ell'}
+        #              'from2': '/opu1p85m/el'}
         self.topic_to = self.node.create_publisher(Float64, topic_name['to'], 1)
         self.topic_cur = self.node.create_publisher(Float64, topic_name['cur'], 1)
         self.topic_tar = self.node.create_publisher(Float64, topic_name['tar'], 1)
