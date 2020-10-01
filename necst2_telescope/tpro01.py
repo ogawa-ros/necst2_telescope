@@ -6,8 +6,8 @@ class AzEl_Publisher(object):
 
     def __init__(self):
         self.node = rclpy.create_node('AzEl_publisher')
-        self.az_pub = self.node.create_publisher(Float64, '/tele/onep85m/az_cmd', 1)
-        self.el_pub = self.node.create_publisher(Float64, '/tele/onep85m/el_cmd', 1)
+        self.az_pub = self.node.create_publisher(Float64, '/opu1p85m/az_cmd', 1)
+        self.el_pub = self.node.create_publisher(Float64, '/opu1p85m/el_cmd', 1)
         
         timer_period = 1  # seconds
         self.node.create_timer(timer_period, self.clock)
