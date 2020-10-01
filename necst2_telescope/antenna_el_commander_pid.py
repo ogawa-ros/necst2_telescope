@@ -28,9 +28,9 @@ class antenna_el_feedback(object):
         self.node.declare_parameter("p_coeff")
         self.node.declare_parameter("i_coeff")
         self.node.declare_parameter("d_coeff")
-        self.p_coeff = self.node.get_parameter("p_coeff").get_parameter_value().string_value # name?
-        self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().string_value # name?
-        self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().string_value # name?
+        self.p_coeff = self.node.get_parameter("p_coeff").get_parameter_value().string_value
+        self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().string_value
+        self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().string_value
 
         self.hensa_stock = [0] * self.i_ave_num
 
@@ -38,15 +38,15 @@ class antenna_el_feedback(object):
         self.node.declare_parameter("pulseper360deg")
         self.node.declare_parameter("pulse_a")
         self.node.declare_parameter("pulse_b")
-        self.gear_ratio = self.node.get_parameter("gear_ratio").get_parameter_value().string_value # name?
-        self.pulseper360deg = self.node.get_parameter("pulseper360deg").get_parameter_value().string_value # name?
-        self.pulse_a = self.node.get_parameter("pulse_a").get_parameter_value().string_value # name?
-        self.pulse_b = self.node.get_parameter("pulse_b").get_parameter_value().string_value # name?
+        self.gear_ratio = self.node.get_parameter("gear_ratio").get_parameter_value().string_value
+        self.pulseper360deg = self.node.get_parameter("pulseper360deg").get_parameter_value().string_value
+        self.pulse_a = self.node.get_parameter("pulse_a").get_parameter_value().string_value
+        self.pulse_b = self.node.get_parameter("pulse_b").get_parameter_value().string_value
 
         self.node.declare_parameter("MOTOR_MAXSTEP")
         self.node.declare_parameter("MOTOR_el_MAXSPEED")
-        self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().string_value # name?
-        self.MOTOR_el_MAXSPEED = self.node.get_parameter("MOTOR_el_MAXSPEED").get_parameter_value().string_value # name?
+        self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().string_value
+        self.MOTOR_el_MAXSPEED = self.node.get_parameter("MOTOR_el_MAXSPEED").get_parameter_value().string_value
         
         topic_name = {'to'   : '/opu1p85m/el_speed',
                       'cur'  : '/opu1p85m/el_current_speed',
@@ -72,13 +72,11 @@ class antenna_el_feedback(object):
         self.t_now = time.time()
 
         speed = self.calc_pid(self.ihensa)
-        # speed = ret[0] ###########
 
         # update
         self.pre_hensa = self.target_deg - self.encoder_deg
         self.pre_deg = self.target_deg
         self.enc_before = self.encoder_deg
-        # self.ihensa = ret[1]
         self.t_past = self.t_now
 
         # deg -> pulse
@@ -127,7 +125,6 @@ class antenna_el_feedback(object):
 
         self.hensa_stock.append(hensa)
         self.hensa_stock = self.hensa_stock[1:]
-        # self.hensa_stock = hensa
 
         dhensa = hensa - self.pre_hensa
         if math.fabs(dhensa) > 1:
