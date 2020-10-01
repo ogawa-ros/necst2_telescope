@@ -30,7 +30,7 @@ class motor_locker(object):
 
         self.pub_az_lock = self.node.create_publisher(Bool, topic_name+'az_lock_cmd', 1)
         self.pub_el_lock = self.node.create_publisher(Bool, topic_name+'el_lock_cmd', 1)
-        self.pub_west_river = self.node.create_publisher(Float, "west", 1)
+        self.pub_west_river = self.node.create_publisher(Float64, "west", 1)
 
         self.node.create_subscription(Float64, '/dev/HEIDENHAIN/ND287/azz', self.recieve_az, 1)
         self.node.create_subscription(Float64, '/dev/HEIDENHAIN/ND287/ell', self.recieve_el, 1)
@@ -57,7 +57,9 @@ class motor_locker(object):
     def recieve_el(self, q):
         self.el = q.data
         if self.el > self.el_upper_2nd_limit or self.el < self.el_lower_2nd_limit:
-            self.pub_west_river.publish(self.el_upper_2nd_limit)
+            msg2 = Float64()
+            msg2.data = self.el_upper_2nd_limit
+            self.pub_west_river.publish(msg2)
             msg = Bool()
             msg.data = True
             self.pub_el_lock.publish(msg)
