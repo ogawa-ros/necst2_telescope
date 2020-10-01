@@ -22,7 +22,7 @@ class checker(object):
         self.el_lower_1st_limit = self.node.get_parameter("el_lower_1st_limit").get_parameter_value().string_value
 
 
-        topic_name = '/1p85m/'
+        topic_name = '/opu1p85m/'
 
         self.pub_az_flag = rclpy.node.create_publisher(Bool, topic_name+'az_soft_limit', 1)
         self.pub_el_flag = rclpy.node.create_publisher(Bool, topic_name+'el_soft_limit', 1)

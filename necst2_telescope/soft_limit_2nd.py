@@ -26,7 +26,7 @@ class motor_locker(object):
         self.el_upper_2nd_limit = self.node.get_parameter("el_upper_2nd_limit").get_parameter_value().string_value
         self.el_lower_2nd_limit = self.node.get_parameter("el_lower_2nd_limit").get_parameter_value().string_value
 
-        topic_name = '/1p85m/'
+        topic_name = '/opu1p85m/'
 
         self.pub_az_lock = rclpy.node.create_publisher(Bool, topic_name+'az_lock_cmd', 1)
         self.pub_el_lock = rclpy.node.create_publisher(Bool, topic_name+'el_lock_cmd', 1)
