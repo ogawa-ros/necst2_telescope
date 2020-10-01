@@ -24,10 +24,10 @@ class checker(object):
 
         topic_name = '/opu1p85m/'
 
-        self.pub_az_flag = rclpy.node.create_publisher(Bool, topic_name+'az_soft_limit', 1)
-        self.pub_el_flag = rclpy.node.create_publisher(Bool, topic_name+'el_soft_limit', 1)
-        self.pub_az_cmd2 = rclpy.node.create_publisher(Float64, topic_name+'az_cmd2', 1)
-        self.pub_el_cmd2 = rclpy.node.create_publisher(Float64, topic_name+'el_cmd2', 1)
+        self.pub_az_flag = self.node.create_publisher(Bool, topic_name+'az_soft_limit', 1)
+        self.pub_el_flag = self.node.create_publisher(Bool, topic_name+'el_soft_limit', 1)
+        self.pub_az_cmd2 = self.node.create_publisher(Float64, topic_name+'az_cmd2', 1)
+        self.pub_el_cmd2 = self.node.create_publisher(Float64, topic_name+'el_cmd2', 1)
 
         self.node.create_subscription(Float64, topic_name+'az_cmd', self.check_az, 1)
         self.node.create_subscription(Float64, topic_name+'el_cmd', self.check_el, 1)

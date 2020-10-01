@@ -28,8 +28,8 @@ class motor_locker(object):
 
         topic_name = '/opu1p85m/'
 
-        self.pub_az_lock = rclpy.node.create_publisher(Bool, topic_name+'az_lock_cmd', 1)
-        self.pub_el_lock = rclpy.node.create_publisher(Bool, topic_name+'el_lock_cmd', 1)
+        self.pub_az_lock = self.node.create_publisher(Bool, topic_name+'az_lock_cmd', 1)
+        self.pub_el_lock = self.node.create_publisher(Bool, topic_name+'el_lock_cmd', 1)
 
         self.node.create_subscription(Float64, topic_name+'az', self.recieve_az, 1)
         self.node.create_subscription(Float64, topic_name+'el', self.recieve_el, 1)

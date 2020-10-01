@@ -8,8 +8,8 @@ def generate_launch_description():
             node_executable='motor_locker',
             parameters=[
                 {'az_upper_2nd_limit': 355},
-                {'az_lower_2nd_limit': 5}
-                {'el_upper_2nd_limit': 85}
+                {'az_lower_2nd_limit': 5},
+                {'el_upper_2nd_limit': 85},
                 {'el_lower_2nd_limit': 10}
             ]
         )],
