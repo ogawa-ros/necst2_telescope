@@ -7,10 +7,10 @@ def generate_launch_description():
             package='necst2_telescope',
             node_executable='limit_2nd',
             parameters=[
-                {'az_upper_2nd_limit': 355.0},
-                {'az_lower_2nd_limit': 5.0},
-                {'el_upper_2nd_limit': 85.0},
-                {'el_lower_2nd_limit': 10.0}
+                {'az_upper_2nd_limit': 355.0,
+                'az_lower_2nd_limit': 5.0,
+                'el_upper_2nd_limit': 85.0,
+                'el_lower_2nd_limit': 10.0}
             ]
         )],
        )
