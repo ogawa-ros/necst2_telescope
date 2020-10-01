@@ -32,7 +32,7 @@ class antenna_az_feedback(object):
         self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().double_value
         self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().double_value
 
-        self.hensa_stock = [0] * self.i_ave_num
+        self.hensa_stock = [0.0] * self.i_ave_num
 
         self.node.declare_parameter("gear_ratio")
         self.node.declare_parameter("pulseper360deg")
