@@ -14,10 +14,10 @@ def generate_launch_description():
                 {'pulseper360deg': "65536"},
                 {'pulse_a': "16384"},
                 {'pulse_b': "2500"},
-                {'MOTOR_MAXSPEED': "32767.5"}
-                {'MOTOR_AZ_MAXSPEED': "320000"}
+                {'MOTOR_MAXSPEED': "32767.5"},
+                {'MOTOR_AZ_MAXSPEED': "320000"},
             ]
-        ) 
+        ), 
         Node(
             package='necst2_telescope',
             node_executable='antenna_el_commander_pid',
@@ -29,8 +29,8 @@ def generate_launch_description():
                 {'pulseper360deg': "65536"},
                 {'pulse_a': "16384"},
                 {'pulse_b': "2500"},
-                {'MOTOR_MAXSPEED': "32767.5"}
-                {'MOTOR_AZ_MAXSPEED': "320000"}
+                {'MOTOR_MAXSPEED': "32767.5"},
+                {'MOTOR_AZ_MAXSPEED': "320000"},
             ]
         )],
     )
