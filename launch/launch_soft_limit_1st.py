@@ -4,7 +4,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     return LaunchDescription([
         Node(
-            package='ros2pkg_ogameasure',
+            package='necst2_telescope',
             node_executable='limit_1st',
             parameters=[
                 {'az_upper_1st_limit': 350},
