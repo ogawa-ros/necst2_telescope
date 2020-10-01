@@ -53,7 +53,8 @@ class antenna_az_feedback(object):
                       'tar'  : '/opu1p85m/az_target_speed',
                       'hensa': '/opu1p85m/az_pid_hensa',
                       'from1': '/opu1p85m/az_cmd2',
-                      'from2': '/opu1p85m/az'}
+                      'from2': '/dev/HEIDENHAIN/ND287/azz'}
+        #              'from2': '/opu1p85m/az'}
         self.topic_to = self.node.create_publisher(Float64, topic_name['to'], 1)
         self.topic_cur = self.node.create_publisher(Float64, topic_name['cur'], 1)
         self.topic_tar = self.node.create_publisher(Float64, topic_name['tar'], 1)
