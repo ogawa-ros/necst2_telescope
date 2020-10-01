@@ -5,7 +5,7 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='ros2pkg_ogameasure',
-            node_executable='checker',
+            node_executable='1st_limit',
             parameters=[
                 {'az_upper_1st_limit': 350},
                 {'az_lower_1st_limit': 10},
