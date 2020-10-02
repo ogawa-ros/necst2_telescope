@@ -48,7 +48,7 @@ class antenna_az_feedback(object):
         self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().double_value
         self.MOTOR_AZ_MAXSPEED = self.node.get_parameter("MOTOR_AZ_MAXSPEED").get_parameter_value().double_value
         
-        topic_name = {'to'   : '/pyinterface/pci7415/rsw0/x/step_cmd',
+        topic_name = {'to'   : '/pyinterface/pci7415/rsw0/x/speed_cmd',
                       'cur'  : '/opu1p85m/az_current_speed',
                       'tar'  : '/opu1p85m/az_target_speed',
                       'hensa': '/opu1p85m/az_pid_hensa',
