@@ -92,10 +92,14 @@ class antenna_az_feedback(object):
             self.speed_d = speed
         else:
             if (speed - self.speed_d) < 0:
-                a = -1
+                a = -1.0
             else:
-                a = 1
+                a = 1.0
             self.speed_d += a * self.MOTOR_MAXSTEP
+
+        # test
+        msg_test1 = Float64()
+        msg_test1.data = self.speed_d
 
         # limit of max speed
         if self.speed_d > self.MOTOR_AZ_MAXSPEED:
@@ -104,10 +108,8 @@ class antenna_az_feedback(object):
             self.speed_d = -self.MOTOR_AZ_MAXSPEED
 
         msg_cmd = Float64()
+
         
-        # test
-        msg_test1 = Float64()
-        msg_test1.data = self.speed_d
 
         if self.lock == True:
             self.speed_d = 0.0
