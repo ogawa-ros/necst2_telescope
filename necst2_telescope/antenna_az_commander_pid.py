@@ -104,6 +104,10 @@ class antenna_az_feedback(object):
             self.speed_d = -self.MOTOR_AZ_MAXSPEED
 
         msg_cmd = Float64()
+        
+        # test
+        msg_test1 = Float64()
+        msg_test1.data = self.speed_d
 
         if self.lock == True:
             self.speed_d = 0.0
@@ -111,8 +115,7 @@ class antenna_az_feedback(object):
             pass
 
         # test
-        msg_test1 = Float64()
-        msg_test1.data = self.MOTOR_AZ_MAXSPEED
+        
         self.test1.publish(msg_test1)
         msg_test2 = Bool()
         msg_test2.data = self.lock
