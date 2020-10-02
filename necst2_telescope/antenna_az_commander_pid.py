@@ -5,7 +5,7 @@ node_name = 'antenna_az_commander_pid'
 import math
 import time
 import rclpy
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, Bool
 
 class antenna_az_feedback(object):
 
@@ -61,6 +61,10 @@ class antenna_az_feedback(object):
         self.topic_hensa = self.node.create_publisher(Float64, topic_name['hensa'], 1)
         topic_from1 = self.node.create_subscription(Float64, topic_name['from1'], self.antenna_az_feedback, 1)
         topic_from2 = self.node.create_subscription(Float64, topic_name['from2'], self.antenna_az_encoder, 1)
+
+        # test
+        self.test1 = self.node.create_publisher(Float64, '/test1', 1)
+        self.test2 = self.node.create_publisher(Bool, '/test2', 1)
         pass
 
     def antenna_az_feedback(self, command):
@@ -100,14 +104,31 @@ class antenna_az_feedback(object):
             self.speed_d = -self.MOTOR_AZ_MAXSPEED
 
         msg_cmd = Float64()
-        msg_cmd.data = self.speed_d
 
         if self.lock == True:
             self.speed_d = 0.0
-            self.topic_to.publish(0.0)
-            return
         else:
-            self.topic_to.publish(msg_cmd)
+            pass
+
+        # test
+        msg_test1 = Float64()
+        msg_test1.data = speed
+        self.test1.publish(msg_test1)
+        msg_test2 = Bool()
+        msg_test2.data = self.lock
+        self.test2.publish(msg_test2)
+
+        msg_cmd.data = self.speed_d
+
+        self.topic_to.publish(msg_cmd)
+
+        # if self.lock == True:
+        #     self.speed_d = 0.0
+        #     msg_cmd.data = 0.0
+        #     self.topic_to.publish(msg_cmd)
+        #     return
+        # else:
+        #     self.topic_to.publish(msg_cmd)
         return
 
     

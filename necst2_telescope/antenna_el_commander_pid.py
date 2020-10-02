@@ -44,9 +44,9 @@ class antenna_el_feedback(object):
         self.pulse_b = self.node.get_parameter("pulse_b").get_parameter_value().double_value
 
         self.node.declare_parameter("MOTOR_MAXSTEP")
-        self.node.declare_parameter("MOTOR_el_MAXSPEED")
+        self.node.declare_parameter("MOTOR_EL_MAXSPEED")
         self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().double_value
-        self.MOTOR_el_MAXSPEED = self.node.get_parameter("MOTOR_el_MAXSPEED").get_parameter_value().double_value
+        self.MOTOR_EL_MAXSPEED = self.node.get_parameter("MOTOR_EL_MAXSPEED").get_parameter_value().double_value
         
         topic_name = {'to'   : '/opu1p85m/el_speed',
                       'cur'  : '/opu1p85m/el_current_speed',
@@ -94,20 +94,29 @@ class antenna_el_feedback(object):
             self.speed_d += a * self.MOTOR_MAXSTEP
 
         # limit of max speed
-        if self.speed_d > self.MOTOR_el_MAXSPEED:
-            self.speed_d = self.MOTOR_el_MAXSPEED
-        if self.speed_d < -self.MOTOR_el_MAXSPEED:
-            self.speed_d = -self.MOTOR_el_MAXSPEED
+        if self.speed_d > self.MOTOR_EL_MAXSPEED:
+            self.speed_d = self.MOTOR_EL_MAXSPEED
+        if self.speed_d < -self.MOTOR_EL_MAXSPEED:
+            self.speed_d = -self.MOTOR_EL_MAXSPEED
 
         msg_cmd = Float64()
-        msg_cmd.data = self.speed_d
 
         if self.lock == True:
             self.speed_d = 0.0
-            self.topic_to.publish(0.0)
-            return
         else:
-            self.topic_to.publish(msg_cmd)
+            pass
+
+        msg_cmd.data = self.speed_d
+
+        self.topic_to.publish(msg_cmd)
+
+        # if self.lock == True:
+        #     self.speed_d = 0.0
+        #     msg_cmd.data = 0.0
+        #     self.topic_to.publish(msg_cmd)
+        #     return
+        # else:
+        #     self.topic_to.publish(msg_cmd)
         return
 
     
