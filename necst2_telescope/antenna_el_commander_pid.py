@@ -48,7 +48,7 @@ class antenna_el_feedback(object):
         self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().double_value
         self.MOTOR_EL_MAXSPEED = self.node.get_parameter("MOTOR_EL_MAXSPEED").get_parameter_value().double_value
         
-        topic_name = {'to'   : '/opu1p85m/el_speed',
+        topic_name = {'to'   : '/pyinterface/pci7415/rsw0/y/step_cmd',
                       'cur'  : '/opu1p85m/el_current_speed',
                       'tar'  : '/opu1p85m/el_target_speed',
                       'hensa': '/opu1p85m/el_pid_hensa',
