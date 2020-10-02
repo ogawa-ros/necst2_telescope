@@ -14,7 +14,7 @@ def generate_launch_description():
                 'pulseper360deg': 65536.0,
                 'pulse_a': 16384.0,
                 'pulse_b': 2500.0,
-                'MOTOR_MAXSPEED': 32767.5,
+                'MOTOR_MAXSTEP': 32767.5,
                 'MOTOR_AZ_MAXSPEED': 320000.0},
             ]
         ), 
@@ -29,7 +29,7 @@ def generate_launch_description():
                 'pulseper360deg': 65536.0,
                 'pulse_a': 16384.0,
                 'pulse_b': 2500.0,
-                'MOTOR_MAXSPEED': 32767.5,
+                'MOTOR_MAXSTEP': 32767.5,
                 'MOTOR_AZ_MAXSPEED': 320000.0},
             ]
         )],
