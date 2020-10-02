@@ -99,7 +99,7 @@ class antenna_az_feedback(object):
 
         # test
         msg_test1 = Float64()
-        msg_test1.data = self.speed_d
+        msg_test1.data = self.MOTOR_MAXSTEP
 
         # limit of max speed
         if self.speed_d > self.MOTOR_AZ_MAXSPEED:
