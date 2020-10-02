@@ -32,7 +32,7 @@ class antenna_el_feedback(object):
         self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().double_value
         self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().double_value
 
-        self.hensa_stock = [0.0] * self.i_ave_num
+        self.hensa_stock = [0] * self.i_ave_num
 
         self.node.declare_parameter("gear_ratio")
         self.node.declare_parameter("pulseper360deg")
@@ -110,13 +110,6 @@ class antenna_el_feedback(object):
 
         self.topic_to.publish(msg_cmd)
 
-        # if self.lock == True:
-        #     self.speed_d = 0.0
-        #     msg_cmd.data = 0.0
-        #     self.topic_to.publish(msg_cmd)
-        #     return
-        # else:
-        #     self.topic_to.publish(msg_cmd)
         return
 
     

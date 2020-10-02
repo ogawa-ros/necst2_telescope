@@ -32,7 +32,7 @@ class antenna_az_feedback(object):
         self.i_coeff = self.node.get_parameter("i_coeff").get_parameter_value().double_value
         self.d_coeff = self.node.get_parameter("d_coeff").get_parameter_value().double_value
 
-        self.hensa_stock = [0.0] * self.i_ave_num
+        self.hensa_stock = [0] * self.i_ave_num
 
         self.node.declare_parameter("gear_ratio")
         self.node.declare_parameter("pulseper360deg")
@@ -61,10 +61,6 @@ class antenna_az_feedback(object):
         self.topic_hensa = self.node.create_publisher(Float64, topic_name['hensa'], 1)
         topic_from1 = self.node.create_subscription(Float64, topic_name['from1'], self.antenna_az_feedback, 1)
         topic_from2 = self.node.create_subscription(Float64, topic_name['from2'], self.antenna_az_encoder, 1)
-
-        # test
-        self.test1 = self.node.create_publisher(Float64, '/test1', 1)
-        self.test2 = self.node.create_publisher(Bool, '/test2', 1)
         pass
 
     def antenna_az_feedback(self, command):
@@ -97,10 +93,6 @@ class antenna_az_feedback(object):
                 a = 1.0
             self.speed_d += a * self.MOTOR_MAXSTEP
 
-        # test
-        msg_test1 = Float64()
-        msg_test1.data = self.MOTOR_MAXSTEP
-
         # limit of max speed
         if self.speed_d > self.MOTOR_AZ_MAXSPEED:
             self.speed_d = self.MOTOR_AZ_MAXSPEED
@@ -109,31 +101,15 @@ class antenna_az_feedback(object):
 
         msg_cmd = Float64()
 
-        
-
         if self.lock == True:
             self.speed_d = 0.0
         else:
             pass
 
-        # test
-        
-        self.test1.publish(msg_test1)
-        msg_test2 = Bool()
-        msg_test2.data = self.lock
-        self.test2.publish(msg_test2)
-
         msg_cmd.data = self.speed_d
 
         self.topic_to.publish(msg_cmd)
 
-        # if self.lock == True:
-        #     self.speed_d = 0.0
-        #     msg_cmd.data = 0.0
-        #     self.topic_to.publish(msg_cmd)
-        #     return
-        # else:
-        #     self.topic_to.publish(msg_cmd)
         return
 
     
