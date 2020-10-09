@@ -51,9 +51,6 @@ class motor_locker(object):
             print(self.az_upper_2nd_limit)
             print(self.az_lower_2nd_limit)
         else:
-            msg = Int64()
-            msg.data = 1
-            self.output_do1.publish(msg)
             print(self.az_upper_2nd_limit)
             print(self.az_lower_2nd_limit)
             pass
@@ -66,9 +63,6 @@ class motor_locker(object):
             msg.data = 0
             self.output_do2.publish(msg)
         else:
-            msg = Int64()
-            msg.data = 1
-            self.output_do2.publish(msg)
             pass
         return
 
