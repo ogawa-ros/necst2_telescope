@@ -48,12 +48,12 @@ class antenna_az_feedback(object):
         self.MOTOR_MAXSTEP = self.node.get_parameter("MOTOR_MAXSTEP").get_parameter_value().double_value
         self.MOTOR_AZ_MAXSPEED = self.node.get_parameter("MOTOR_AZ_MAXSPEED").get_parameter_value().double_value
         
-        topic_name = {'to'   : '/pyinterface/pci7415/rsw0/x/speed_cmd',
+        topic_name = {'to'   : '/pyinterface/pci7415/rsw0/y/speed_cmd',
                       'cur'  : '/opu1p85m/az_current_speed',
                       'tar'  : '/opu1p85m/az_target_speed',
                       'hensa': '/opu1p85m/az_pid_hensa',
                       'from1': '/opu1p85m/az_cmd2',
-                      'from2': '/dev/HEIDENHAIN/ND287/azz'}
+                      'from2': '/dev/HEIDENHAIN/ND287/az'}
         #              'from2': '/opu1p85m/az'}
         self.topic_to = self.node.create_publisher(Float64, topic_name['to'], 1)
         self.topic_cur = self.node.create_publisher(Float64, topic_name['cur'], 1)
@@ -106,7 +106,7 @@ class antenna_az_feedback(object):
         else:
             pass
 
-        msg_cmd.data = self.speed_d
+        msg_cmd.data = -1*self.speed_d
 
         self.topic_to.publish(msg_cmd)
 
