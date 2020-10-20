@@ -30,7 +30,7 @@ def generate_launch_description():
                 'pulse_a': 16384.0,
                 'pulse_b': 2500.0,
                 'MOTOR_MAXSTEP': 32767.5,
-                'MOTOR_AZ_MAXSPEED': 320000.0},
+                'MOTOR_EL_MAXSPEED': 320000.0},
             ]
         )],
     )

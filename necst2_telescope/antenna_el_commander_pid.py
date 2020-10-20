@@ -64,6 +64,7 @@ class antenna_el_feedback(object):
         pass
 
     def antenna_el_feedback(self, command):
+        # deg/sec
         self.target_deg = command.data
 
         if self.t_past == 0.0:
@@ -99,15 +100,13 @@ class antenna_el_feedback(object):
         if self.speed_d < -self.MOTOR_EL_MAXSPEED:
             self.speed_d = -self.MOTOR_EL_MAXSPEED
 
-        msg_cmd = Float64()
-
         if self.lock == True:
             self.speed_d = 0.0
         else:
             pass
 
+        msg_cmd = Float64()
         msg_cmd.data = -1*self.speed_d
-
         self.topic_to.publish(msg_cmd)
 
         return
@@ -134,10 +133,6 @@ class antenna_el_feedback(object):
         if math.fabs(dhensa) > 1:
             dhensa = 0.0
 
-        msg_target = Float64()
-        msg_current = Float64()
-        msg_hensa = Float64()
-
         if (self.encoder_deg - self.enc_before) != 0.0:
             self.current_speed = (self.encoder_deg - self.enc_before) / (self.t_now - self.t_past)
         
@@ -154,8 +149,11 @@ class antenna_el_feedback(object):
         # PID
         rate = target_speed + self.p_coeff*hensa + self.i_coeff*self.ihensa*(self.t_now-self.t_past) + self.d_coeff*dhensa/(self.t_now-self.t_past)
 
+        msg_target = Float64()
         msg_target.data = target_speed
+        msg_current = Float64()
         msg_current.data = self.current_speed
+        msg_hensa = Float64()
         msg_hensa.data = hensa
 
         self.topic_tar.publish(msg_target)
