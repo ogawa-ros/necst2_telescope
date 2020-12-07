@@ -11,82 +11,43 @@ class checker(object):
     def __init__(self):
         self.node = rclpy.create_node(node_name)
 
-        self.node.declare_parameter("az_upper_1st_limit")
-        self.node.declare_parameter("az_lower_1st_limit")
-        self.node.declare_parameter("el_upper_1st_limit")
-        self.node.declare_parameter("el_lower_1st_limit")
-
-        self.az_upper_1st_limit = self.node.get_parameter("az_upper_1st_limit").get_parameter_value().double_value
-        self.az_lower_1st_limit = self.node.get_parameter("az_lower_1st_limit").get_parameter_value().double_value
-        self.el_upper_1st_limit = self.node.get_parameter("el_upper_1st_limit").get_parameter_value().double_value
-        self.el_lower_1st_limit = self.node.get_parameter("el_lower_1st_limit").get_parameter_value().double_value
+        self.upper_1st_limit = double(self.node.declare_parameter("upper_1st_limit").value)
+        self.lower_1st_limit = double(self.node.declare_parameter("lower_1st_limit").value)
 
 
-        topic_name = '/opu1p85m/'
+        topic_name = '/opu1p85m'
 
-        self.pub_az_flag = self.node.create_publisher(Bool, topic_name+'az_soft_limit', 1)
-        self.pub_el_flag = self.node.create_publisher(Bool, topic_name+'el_soft_limit', 1)
-        self.pub_az_cmd2 = self.node.create_publisher(Float64, topic_name+'az_cmd2', 1)
-        self.pub_el_cmd2 = self.node.create_publisher(Float64, topic_name+'el_cmd2', 1)
+        self.pub_flag = self.node.create_publisher(Bool, topic_name+'/azel/soft_limit', 1)
+        self.pub_cmd2 = self.node.create_publisher(Float64, topic_name+'/azel/cmd2', 1)
 
-        self.node.create_subscription(Float64, topic_name+'az_cmd', self.check_az, 1)
-        self.node.create_subscription(Float64, topic_name+'el_cmd', self.check_el, 1)
+        self.node.create_subscription(Float64, topic_name+'/azel/cmd', self.check_az, 1)
 
 
-    def check_az(self, q):
-        self.az = q.data
-        if self.az > self.az_upper_1st_limit:
+    def check(self, q):
+        self.azel = q.data
+        if self.azel > self.upper_1st_limit:
             msg = Float64()
-            msg.data = self.az_upper_1st_limit
+            msg.data = self.upper_1st_limit
             msg2 = Bool()
             msg2.data = True
-            self.pub_az_cmd2.publish(msg)
-            self.pub_az_flag.publish(msg2)
+            self.pub_cmd2.publish(msg)
+            self.pub_flag.publish(msg2)
 
-        elif self.az < self.az_lower_1st_limit:
+        elif self.azel < self.lower_1st_limit:
             msg = Float64()
-            msg.data = self.az_lower_1st_limit
+            msg.data = self.lower_1st_limit
             msg2 = Bool()
             msg2.data = True
-            self.pub_az_cmd2.publish(msg)
-            self.pub_az_flag.publish(msg2)
+            self.pub_cmd2.publish(msg)
+            self.pub_flag.publish(msg2)
 
         else:
             msg = Float64()
-            msg.data = self.az
+            msg.data = self.azel
             msg2 = Bool()
             msg2.data = False
-            self.pub_az_cmd2.publish(msg)
-            self.pub_az_flag.publish(msg2)
-            pass
-
-        return
-
-    def check_el(self, q):
-        self.el = q.data
-        if self.el > self.el_upper_1st_limit:
-            msg = Float64()
-            msg.data = self.el_upper_1st_limit
-            msg2 = Bool()
-            msg2.data = True
-            self.pub_el_cmd2.publish(msg)
-            self.pub_el_flag.publish(msg2)
-
-        elif self.el < self.el_lower_1st_limit:
-            msg = Float64()
-            msg.data = self.el_lower_1st_limit
-            msg2 = Bool()
-            msg2.data = True
-            self.pub_el_cmd2.publish(msg)
-            self.pub_el_flag.publish(msg2)
-
-        else:
-            msg = Float64()
-            msg.data = self.el
-            msg2 = Bool()
-            msg2.data = False
-            self.pub_el_cmd2.publish(msg)
-            self.pub_el_flag.publish(msg2)
+            self.pub_cmd2.publish(msg)
+            self.pub_flag.publish(msg2)
             pass
 
         return
