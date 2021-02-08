@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-from ..necst2_telescope.antenna_commander_pid import antenna_commander_pid
-from ..necst2_telescope.soft_limit_1st import checker
-from ..necst2_telescope.soft_limit_2nd import motor_locker
+from .antenna_commander_pid import antenna_commander_pid
+from .soft_limit_1st import checker
+from .soft_limit_2nd import motor_locker
 
 import rclpy
 from rclpy.executors import SingleThreadedExecutor
+
 
 def main(args=None):
     rclpy.init(args=args)
